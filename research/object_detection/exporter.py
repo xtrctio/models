@@ -71,6 +71,10 @@ def _image_tensor_input_placeholder(input_shape=None):
 def _tf_example_input_placeholder():
   """Returns input that accepts a batch of strings with tf examples.
 
+  If key fields.InputDataFields.image_additional_channels is present in
+     tensor_dict, the additional channels will be merged into
+     fields.InputDataFields.image
+
   Returns:
     a tuple of input placeholder and the output decoded images.
   """
@@ -79,7 +83,14 @@ def _tf_example_input_placeholder():
   def decode(tf_example_string_tensor):
     tensor_dict = tf_example_decoder.TfExampleDecoder().decode(
         tf_example_string_tensor)
+
+    if fields.InputDataFields.image_additional_channels in tensor_dict:
+        channels = tensor_dict[fields.InputDataFields.image_additional_channels]
+        tensor_dict[fields.InputDataFields.image] = tf.concat(
+            [tensor_dict[fields.InputDataFields.image], channels], axis=2)
+
     image_tensor = tensor_dict[fields.InputDataFields.image]
+
     return image_tensor
   return (batch_tf_example_placeholder,
           tf.map_fn(decode,
