@@ -82,7 +82,8 @@ class FasterRCNNResnetV1FeatureExtractor(
         tensor representing a batch of images.
 
     """
-    channel_means = [123.68, 116.779, 103.939] + ([128] * 52)
+    ADDITIONAL_CHANNELS = 0
+    channel_means = [123.68, 116.779, 103.939] + ([128] * ADDITIONAL_CHANNELS)
     return resized_inputs - [[channel_means]]
 
   def _extract_proposal_features(self, preprocessed_inputs, scope):
