@@ -82,7 +82,7 @@ class FasterRCNNResnetV1FeatureExtractor(
         tensor representing a batch of images.
 
     """
-    ADDITIONAL_CHANNELS = 0
+    ADDITIONAL_CHANNELS = 3
     channel_means = [123.68, 116.779, 103.939] + ([128] * ADDITIONAL_CHANNELS)
     return resized_inputs - [[channel_means]]
 

@@ -21,6 +21,9 @@ from __future__ import print_function
 from absl import flags
 
 import tensorflow as tf
+import tensorflow.contrib.eager as tfe
+
+tfe.enable_eager_execution()
 
 from object_detection import model_hparams
 from object_detection import model_lib
