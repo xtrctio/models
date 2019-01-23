@@ -50,11 +50,11 @@ def build_input(tfrecord_paths):
   return serialized_example_tensor, image_tensor
 
 
-def build_inference_graph(image_tensor, inference_graph_path):
+def build_inference_graph(tf_example_tensor, inference_graph_path):
   """Loads the inference graph and connects it to the input image.
 
   Args:
-    image_tensor: The input image. uint8 tensor, shape=[1, None, None, 3]
+    tf_example_tensor: The input image. uint8 tensor, shape=[1, None, None, 3]
     inference_graph_path: Path to the inference graph with embedded weights
 
   Returns:
@@ -71,7 +71,7 @@ def build_inference_graph(image_tensor, inference_graph_path):
   graph_def.MergeFromString(graph_content)
 
   tf.import_graph_def(
-      graph_def, name='', input_map={'image_tensor': image_tensor})
+      graph_def, name='', input_map={'tf_example': tf_example_tensor})
 
   g = tf.get_default_graph()
 

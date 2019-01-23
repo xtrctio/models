@@ -71,7 +71,7 @@ def main(_):
     tf.logging.info('Reading graph and building model...')
     (detected_boxes_tensor, detected_scores_tensor,
      detected_labels_tensor) = detection_inference.build_inference_graph(
-         image_tensor, FLAGS.inference_graph)
+        serialized_example_tensor, FLAGS.inference_graph)
 
     tf.logging.info('Running inference and writing output to {}'.format(
         FLAGS.output_tfrecord_path))
